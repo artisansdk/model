@@ -1,10 +1,10 @@
-# Self-Validaitng Model
+# Self-Validating Model
 
 A self-validating model compatible with Laravel Eloquent that validates when it's saved.
 
 ## Table of Contents
 
-- [Self-Validaitng Model](#self-validaitng-model)
+- [Self-Validating Model](#self-validating-model)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage Guide](#usage-guide)
