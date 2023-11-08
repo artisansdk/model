@@ -15,21 +15,17 @@ class InvalidAttributes extends ValidationException
     /**
      * Create a new validation exception instance.
      *
+     * @param  string|null  $message
      * @param  \Illuminate\Contracts\Validation\Validator  $validator
      * @param  \Illuminate\Database\Eloquent\Model  $model
      */
-    public function __construct($message, Validator $validator, Model $model)
+    public function __construct(?string $message, Validator $validator, Model $model)
     {
         parent::__construct($validator, $model);
 
-        $this->message = $message ?? 'The '.$this->resourceName().' has invalid attributes.';
+        $this->applyDefaultMessage($message);
 
-        $app = App::getFacadeApplication();
-
-        if ($app && ($app->environment('testing') || $app->runningInConsole())) { // @phpstan-ignore-line
-            $this->message .= sprintf(' %s', json_encode($this->getErrors(), JSON_PRETTY_PRINT));
-            $this->message .= PHP_EOL.sprintf('The %s has the attributes: %s', $this->resourceName(), $model->makeVisible($model->getHidden())->toJson(JSON_PRETTY_PRINT));
-        }
+        $this->expandMessageOnCosole($model);
     }
 
     /**
@@ -44,6 +40,33 @@ class InvalidAttributes extends ValidationException
             'errors' => $this->getErrors()->toArray(),
             'resource' => $this->resourceName(),
         ], 422);
+    }
+
+    /**
+     * Apply the default message if no message is provided
+     *
+     * @param  string|null  $message
+     * @return void
+     */
+    protected function applyDefaultMessage(string $message = null): void
+    {
+        $this->message = $message ?? 'The '.$this->resourceName().' has invalid attributes.';
+    }
+
+    /**
+     * Expand the message to clarify context when running in a console environment.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return void
+     */
+    protected function expandMessageOnCosole(Model $model): void
+    {
+        $app = App::getFacadeApplication();
+
+        if ($app && ($app->environment('testing') || $app->runningInConsole())) { // @phpstan-ignore-line
+            $this->message .= sprintf(' %s', json_encode($this->getErrors(), JSON_PRETTY_PRINT));
+            $this->message .= PHP_EOL.sprintf('The %s has the attributes: %s', $this->resourceName(), $model->makeVisible($model->getHidden())->toJson(JSON_PRETTY_PRINT));
+        }
     }
 
     /**
