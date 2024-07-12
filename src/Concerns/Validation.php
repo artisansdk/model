@@ -31,9 +31,7 @@ trait Validation
      *
      * This renders this function void.
      */
-    public static function bootValidatingTrait()
-    {
-    }
+    public static function bootValidatingTrait() {}
 
     /**
      * Boot the trait's observers.
@@ -70,7 +68,7 @@ trait Validation
      *
      * @throws BadMethodCallException
      */
-    public function setRules(array $rules = null)
+    public function setRules(?array $rules = null)
     {
         throw new BadMethodCallException(__FUNCTION__.'() is not allowed because getRules() is not property based.');
     }
@@ -102,7 +100,7 @@ trait Validation
     /**
      * Throw a validation exception.
      *
-     * @throws \ArtisanSdk\Model\Exceptions\InvalidAttributes
+     * @throws InvalidAttributes
      */
     public function throwValidationException($message = null)
     {

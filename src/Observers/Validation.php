@@ -6,6 +6,4 @@ namespace ArtisanSdk\Model\Observers;
 
 use Watson\Validating\ValidatingObserver;
 
-class Validation extends ValidatingObserver
-{
-}
+class Validation extends ValidatingObserver {}

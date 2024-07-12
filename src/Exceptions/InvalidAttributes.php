@@ -16,8 +16,8 @@ class InvalidAttributes extends ValidationException
      * Create a new validation exception instance.
      *
      * @param  string|null  $message
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Validator  $validator
+     * @param  Model  $model
      */
     public function __construct(?string $message, Validator $validator, Model $model)
     {
@@ -31,7 +31,7 @@ class InvalidAttributes extends ValidationException
     /**
      * Render the exception as a JSON error.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function render()
     {
@@ -48,7 +48,7 @@ class InvalidAttributes extends ValidationException
      * @param  string|null  $message
      * @return void
      */
-    protected function applyDefaultMessage(string $message = null): void
+    protected function applyDefaultMessage(?string $message = null): void
     {
         $this->message = $message ?? 'The '.$this->resourceName().' has invalid attributes.';
     }
@@ -56,7 +56,7 @@ class InvalidAttributes extends ValidationException
     /**
      * Expand the message to clarify context when running in a console environment.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @return void
      */
     protected function expandMessageOnCosole(Model $model): void
