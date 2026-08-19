@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Composer\InstalledVersions;
 use Illuminate\Support\Facades\App;
 
 /*
@@ -35,7 +36,7 @@ uses()->beforeEach(function () {
     {
         public function version(): string
         {
-            return "0.0.0";
+            return InstalledVersions::getVersion('illuminate/database') ?? '12.0.0';
         }
     });
 })->afterEach(fn () => App::clearResolvedInstance('app'))->in('Unit');

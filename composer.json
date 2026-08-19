@@ -41,7 +41,10 @@
     "autoload-dev": {
         "psr-4": {
             "ArtisanSdk\\Model\\Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "bootstrap.php"
+        ]
     },
     "scripts": {
         "check": [

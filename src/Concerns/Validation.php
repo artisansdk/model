@@ -10,7 +10,6 @@ use BadMethodCallException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Watson\Validating\ValidatingTrait;
-use Composer\InstalledVersions;
 
 trait Validation
 {
@@ -40,7 +39,7 @@ trait Validation
      */
     public static function bootValidation(): void
     {
-        if (version_compare(InstalledVersions::getPrettyVersion('illuminate/database') ?? '12.0.0', '12.0.0', '>=')) {
+        if (version_compare(App::version(), '12.0.0', '>=')) {
             static::whenBooted(function () {
                 static::observe(new Observer);
             });
