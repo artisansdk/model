@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\App;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -14,6 +16,29 @@ declare(strict_types=1);
 */
 
 // uses(Tests\TestCase::class)->in('Feature');
+
+/*
+|--------------------------------------------------------------------------
+| Facade Root
+|--------------------------------------------------------------------------
+|
+| This package doesn't depend on illuminate/foundation, so nothing ever sets
+| the facade root outside of tests. Models call App::version() when booting
+| (see Concerns\Validation), which needs a root to resolve against, so stub
+| one here for every test. Individual tests can still override App::version()
+| with their own mock to exercise specific version branches.
+|
+*/
+
+uses()->beforeEach(function () {
+    App::swap(new class
+    {
+        public function version(): string
+        {
+            return "0.0.0";
+        }
+    });
+})->afterEach(fn () => App::clearResolvedInstance('app'))->in('Unit');
 
 /*
 |--------------------------------------------------------------------------
