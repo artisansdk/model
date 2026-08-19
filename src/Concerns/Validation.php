@@ -8,7 +8,9 @@ use ArtisanSdk\Model\Exceptions\InvalidAttributes;
 use ArtisanSdk\Model\Observers\Validation as Observer;
 use BadMethodCallException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Watson\Validating\ValidatingTrait;
+use Composer\InstalledVersions;
 
 trait Validation
 {
@@ -36,8 +38,16 @@ trait Validation
     /**
      * Boot the trait's observers.
      */
-    public static function bootValidation()
+    public static function bootValidation(): void
     {
+        if (version_compare(InstalledVersions::getPrettyVersion('illuminate/database') ?? '12.0.0', '12.0.0', '>=')) {
+            static::whenBooted(function () {
+                static::observe(new Observer);
+            });
+
+            return;
+        }
+
         static::observe(new Observer);
     }
 
