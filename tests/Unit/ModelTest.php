@@ -12,24 +12,22 @@ use Illuminate\Translation\{FileLoader, Translator};
 use Illuminate\Validation\Factory;
 use ReflectionClass;
 
-class Stub extends Eloquent
-{
-    public function rules(): array
-    {
-        return [
-            'foo' => ['required'],
-        ];
-    }
-}
-
 test('model should validate attributes against rules when saved', function () {
     $language = dirname((new ReflectionClass(Translator::class))->getFileName()).'/lang';
-    $loader = new FileLoader(new Filesystem(), $language);
+    $loader = new FileLoader(new Filesystem, $language);
     $loader->addNamespace('lang', $language);
     $loader->load(locale: 'en', group: 'validation', namespace: 'lang');
     $validator = new Factory(new Translator($loader, 'en'));
 
-    $model = new Stub();
+    $model = new class extends Eloquent
+    {
+        public function rules(): array
+        {
+            return [
+                'foo' => ['required'],
+            ];
+        }
+    };
     $model->setValidator($validator);
     $model->foo = null;
 

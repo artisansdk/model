@@ -1,7 +1,10 @@
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/larastan/larastan/extension.neon
 
 parameters:
+    bootstrapFiles:
+        - bootstrap.php
+    noEnvCallsOutsideOfConfig: false
     paths:
         - src/
     level: 5

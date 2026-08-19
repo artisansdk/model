@@ -27,3 +27,4 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 yarn-error.log
+/storage/framework/testing/coverage

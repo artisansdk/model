@@ -34,9 +34,11 @@ abstract class Eloquent extends Model
     public $incrementing = true;
 
     /**
-     * Exposed observable events.
+     * User exposed observable events.
      *
-     * @var array
+     * These are extra user-defined events observers may subscribe to.
+     *
+     * @var string[]
      */
     protected $observables = ['validating', 'validated'];
 

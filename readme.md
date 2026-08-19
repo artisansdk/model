@@ -9,6 +9,7 @@ A self-validating model compatible with Laravel Eloquent that validates when it'
   - [Installation](#installation)
   - [Usage Guide](#usage-guide)
   - [Running the Tests](#running-the-tests)
+    - [Running with Docker](#running-with-docker)
   - [Licensing](#licensing)
 
 ## Installation
@@ -63,9 +64,30 @@ composer retry
 
 See the `composer.json` for more details on their execution and reporting output.
 
+### Running with Docker
+
+The included Dockerfile uses PHP 8.5, Composer, and Xdebug. Build the image and
+run the full test suite with:
+
+```bash
+docker build -t artisansdk-model .
+docker run --rm --volume "$PWD":/app artisansdk-model
+```
+
+The bind mount keeps the installed `vendor/` directory on the host, while `--rm`
+removes the container after its command finishes. To run any Composer command
+instead of the default install-and-test command, append it to `docker run`:
+
+```bash
+docker run --rm --volume "$PWD":/app artisansdk-model composer update --no-dev
+```
+
+Xdebug runs in coverage mode, so `composer coverage` emits both its text and
+HTML coverage reports.
+
 ## Licensing
 
-Copyright (c) 2018-2023 [Artisan Made, Co.](http://artisanmade.io)
+Copyright (c) 2018-2026 [Artisan Made, Co.](http://artisanmade.io)
 
 This package is released under the MIT license. Please see the LICENSE file
 distributed with every copy of the code for commercial licensing terms.

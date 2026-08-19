@@ -63,7 +63,7 @@ class InvalidAttributes extends ValidationException
     {
         $app = App::getFacadeApplication();
 
-        if ($app && ($app->environment('testing') || $app->runningInConsole())) { // @phpstan-ignore-line
+        if ($app && ($app->environment('testing') || $app->runningInConsole())) {
             $this->message .= sprintf(' %s', json_encode($this->getErrors(), JSON_PRETTY_PRINT));
             $this->message .= PHP_EOL.sprintf('The %s has the attributes: %s', $this->resourceName(), $model->makeVisible($model->getHidden())->toJson(JSON_PRETTY_PRINT));
         }

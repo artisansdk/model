@@ -38,7 +38,7 @@ trait Validation
      */
     public static function bootValidation()
     {
-        static::observe(new Observer());
+        static::observe(new Observer);
     }
 
     /**
